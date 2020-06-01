@@ -19,12 +19,14 @@ Let's see how long this will last.
 6. input from the human
 7. window creation
 8. turtle controls
-9. functions 
+9. functions
 
 
 # testcases that make for the syntax of the language
 ## printing text
 print to the screen: (String to the screen)
+
+(echo <String>)
 
 (echo "Hello world!")
 (echo "The language of gods")
@@ -58,23 +60,10 @@ after the opening because you are already inside the comment.
     then {(echo "five is greather than tree")}
 )
 
-## input
-the input keyword with the input text that has to be shown
-(input "give me some input:")
+(if <condition> then <stmt_body> else <stmt_body>)
 
-## Types and default values in the language
-Integers are a default class in the language.
-In a core folder there will probably be a class with functions for the integer. But I't will be implemented in the core structure of the language.
-This approach is chosen because the the core values in the lanuage would otherwise look like:
-(Type Int
-    // the check if a value is an integer
-    check (Raw: val) : Bool {
-        // this function would make a regex check for the value type.
-        // the value would be found be going into the right scope like most languages have these days.
-        // if the match would return true 
-        (return (match val, core.patterns.Int))
-    }
-)
+<condition> : (<comparason> <val1> <val2>)
+<stmt_body> : {<stmt>+}
 
 ## classes
 the classes that define how the objects will be handled.
@@ -82,20 +71,56 @@ the classes that define how the objects will be handled.
 
 (class Scalar
     // initialize an object of this class
-    init (Int: x) : void {
+    func init (Int: x) : void {
         public Int val := x;
     }
 )
 
 (class 2dVector
     // the class constructor this function does not return anything
-    init (Int: x, Int: y) : void (
+    func init (Int: x, Int: y) : void {
         public Int x := x;
         public Int y := y;
-    )
+    }
 )
+
+## variables
+//declare the age variable as an Integer
+(var Int Age := 20)
+(var String Name := "Anorak6435")
+
+//print the variables I created
+(echo (var Age))
+(echo (var Name))
+
+## input
+the input keyword with the input text that has to be shown
+(input "give me some input:")
 
 ## window creation
 build-in function for making a window in the language.
+// (window <width>, <height>, <title>)
 (window 600, 400, "Window Title")
 
+## turtle controls
+Here we write the commands for the turtle
+
+line:
+A line could be between 2 vectors
+(line <vector>, <vector>)
+(line (var 2dVector 10, 10), (var 2dVector 30, 30))
+or between two collection of integers
+(line [15, 10], [12, 7])
+(line <list>, <list>)
+
+triangle:
+(triangle <vector>, <vector>, <vector>)
+//create the variables that are the vector variables
+(triangle (var 2dVector 10, 10), (var 2dVector 30, 30), (var 2dVector 0, 30))
+(triangle <variable>, <variable>, <variable>)
+(triangle (var p1), (var p2), (var P3))
+
+## functions
+(func <name> <stmt_body>)
+
+in the stmt_body there can be all kinds of statements. (But not class statements)
