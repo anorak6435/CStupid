@@ -26,7 +26,7 @@ Let's see how long this will last.
 ## printing text
 print to the screen: (String to the screen)
 
-(echo <String>)
+(echo ~String~)
 
 (echo "Hello world!")
 (echo "The language of gods")
@@ -60,10 +60,10 @@ after the opening because you are already inside the comment.
     then {(echo "five is greather than tree")}
 )
 
-(if <condition> then <stmt_body> else <stmt_body>)
+(if ~condition~ then ~stmt_body~ else ~stmt_body~)
 
-<condition> : (<comparason> <val1> <val2>)
-<stmt_body> : {<stmt>+}
+~condition~ : (~comparison~ ~val1~ ~val2~)
+~stmt_body~ : {~stmt~+}
 
 ## classes
 the classes that define how the objects will be handled.
@@ -99,7 +99,7 @@ the input keyword with the input text that has to be shown
 
 ## window creation
 build-in function for making a window in the language.
-// (window <width>, <height>, <title>)
+// (window ~width~, ~height~, ~title~)
 (window 600, 400, "Window Title")
 
 ## turtle controls
@@ -107,20 +107,20 @@ Here we write the commands for the turtle
 
 line:
 A line could be between 2 vectors
-(line <vector>, <vector>)
+(line ~vector~, ~vector~)
 (line (var 2dVector 10, 10), (var 2dVector 30, 30))
 or between two collection of integers
 (line [15, 10], [12, 7])
-(line <list>, <list>)
+(line ~list~, ~list~)
 
 triangle:
-(triangle <vector>, <vector>, <vector>)
+(triangle ~vector~, ~vector~, ~vector~)
 //create the variables that are the vector variables
 (triangle (var 2dVector 10, 10), (var 2dVector 30, 30), (var 2dVector 0, 30))
-(triangle <variable>, <variable>, <variable>)
+(triangle ~variable~, ~variable~, ~variable~)
 (triangle (var p1), (var p2), (var P3))
 
 ## functions
-(func <name> <stmt_body>)
+(func ~name~ ~stmt_body~)
 
 in the stmt_body there can be all kinds of statements. (But not class statements)
