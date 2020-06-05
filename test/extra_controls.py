@@ -23,4 +23,5 @@ g = Grabber(count(5))
 
 print(g.next())
 print(g.next())
+print(g.next())
 print(g.last())
