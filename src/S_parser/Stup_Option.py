@@ -2,7 +2,7 @@ import re
 # the options like rules for the grammar parser.
 
 class Option:
-    def __init__(self, name, pattern, group=0):
+    def __init__(self, name, pattern=None, group=0):
         self.name = name
         self.pattern = pattern
         # the group I'm matching to will have a default of 0 unless defined

@@ -20,10 +20,20 @@ MainOptions.append(Option("star", r"\*"))
 MainOptions.append(Option("NewLine", r"\n"))
 MainOptions.append(Option("Whitespace", r"\s+"))
 
+# the different grammar options
+RuleOptions = []
+RuleOptions.append(Option("Tag"))
+RuleOptions.append(Option("Colon"))
+RuleOptions.append(Option("ANY"))
+RuleOptions.append(Option("NOT"))
+
 class Parser:
     def __init__(self, grammar):
         # put the grammar for the parser into a variable
         self.grammar = grammar
+        # keep track of where I am inside the grammar
+        self.line = 1
+        self.index = 0
         print("creating the parser!")
         self.MainSelector = Selector(MainOptions)
         self.build()
@@ -32,11 +42,31 @@ class Parser:
     # building the parser by the grammar
     def build(self):
         # get all the tokens from the grammar file
+        tokens = []
         for tok in self.get_Tokens():
-            print(tok[1])
+            if tok[1].name == "NewLine":
+                self.line += 1
+                self.index = 0
+            else:
+                # update the location after setting the token
+                if tok[1].name != "Whitespace":
+                    tok[1].setLocation(self.line, self.index)
+                    tokens.append(tok)
+                    print(tok[1].name)
+                # add the length of the token to the index
+                self.index += len(tok[0])
+
             # tok[0] is the full matched string.
             # tok[1] is the token that get's made
             self.grammar = self.grammar[len(tok[0]):]
+
+        # now that we have the tokens we only keep the token object
+        tokens = [tok[1] for tok in tokens]
+        self.match_grammar(tokens)
+
+    # this function matches the tokens with the grammar options
+    def match_grammar(self, tokens):
+        pass
 
     def get_Tokens(self):
         canParse = True
