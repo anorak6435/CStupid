@@ -29,6 +29,8 @@ class TokenSelector:
                 if not match:
                     # did not match
                     raise SyntaxError("There was a mismatch in the grammar at:'{}'".format())
+                
+                match = False
 
     # check tokens against a checklist    
     def checklist(self, checklist):
