@@ -1,13 +1,21 @@
-from S_parser.Stup_Option import Option
-from S_parser.Stup_Selector import Selector
+# general imports
 import re
-from S_parser.Token import Token
+
+# tokenizer imports
+from S_parser.Tokenizer.Stup_Option import Option
+from S_parser.Tokenizer.Stup_Selector import Selector
+from S_parser.Tokenizer.Token import Token
+# imports for the ast
+from S_parser.Tree.Stup_Token_Selector import TokenSelector
+
+# DEBUG FLAGS
+DebugShowTokens = True
 
 # MainOptions with patterns to match
 MainOptions = []
-MainOptions.append(Option("Tag", r"\<([a-zA-Z0-9_]+)\>"))
+MainOptions.append(Option("Tag", r"\<([a-zA-Z0-9_]+)\>", 1))
 MainOptions.append(Option("String", r'"(?:[^"\\]|\\.)*"'))
-MainOptions.append(Option("Regex", r"R\((.+?)\);", 1))
+MainOptions.append(Option("Regex", r"R/(.+?)\/R", 1))
 MainOptions.append(Option("Colon", r"\:"))
 MainOptions.append(Option("SemiColon", r"\;"))
 MainOptions.append(Option("LBrace", r"\["))
@@ -20,27 +28,26 @@ MainOptions.append(Option("star", r"\*"))
 MainOptions.append(Option("NewLine", r"\n"))
 MainOptions.append(Option("Whitespace", r"\s+"))
 
-# the different grammar options
-RuleOptions = []
-RuleOptions.append(Option("Tag"))
-RuleOptions.append(Option("Colon"))
-RuleOptions.append(Option("ANY"))
-RuleOptions.append(Option("NOT"))
-
 class Parser:
-    def __init__(self, grammar):
+    # give the grammar to the parser.
+    # the default entrypoint
+    def __init__(self, grammar, entry_point="start"):
         # put the grammar for the parser into a variable
         self.grammar = grammar
+        self.grammar_text = grammar
         # keep track of where I am inside the grammar
         self.line = 1
         self.index = 0
         print("creating the parser!")
         self.MainSelector = Selector(MainOptions)
-        self.build()
-        print("build the parser!")
+        # start building the grammar for my parser
+        toks = self.Grammar_to_tokens()
+        print("build the parser! from text:")
+        print(self.grammar_text)
+        self.Meta_Selector = TokenSelector(toks, entry_point)
 
-    # building the parser by the grammar
-    def build(self):
+    # get the tokens from the grammar file
+    def Grammar_to_tokens(self):
         # get all the tokens from the grammar file
         tokens = []
         for tok in self.get_Tokens():
@@ -52,7 +59,6 @@ class Parser:
                 if tok[1].name != "Whitespace":
                     tok[1].setLocation(self.line, self.index)
                     tokens.append(tok)
-                    print(tok[1].name)
                 # add the length of the token to the index
                 self.index += len(tok[0])
 
@@ -62,12 +68,13 @@ class Parser:
 
         # now that we have the tokens we only keep the token object
         tokens = [tok[1] for tok in tokens]
-        self.match_grammar(tokens)
+        if DebugShowTokens:
+            # show the tokens
+            for tok in tokens:
+                print(tok)
+        return tokens
 
-    # this function matches the tokens with the grammar options
-    def match_grammar(self, tokens):
-        pass
-
+    # private function that returns the tokens
     def get_Tokens(self):
         canParse = True
         # start parsing the grammar file
