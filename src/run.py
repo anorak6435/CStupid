@@ -7,9 +7,10 @@ from S_parser.Stupid_parser import Parser
 # <string> : R/\".+?\"/R;
 # '''
 
-testG = '''<start> : <echo>;
-<echo> "\(" "echo" "\)";
+testG = '''<start> : [<echo>, <math>];
+<echo> : "\(" "echo" "\)";
+<math> : "(" ["+", "-", "*", "/"] <number> <number> ")";
+<number> : R/\d+/R;
 '''
 # building the parser based on the grammar
 p = Parser(testG)
-
