@@ -1,4 +1,5 @@
 src/S_parser/Tokenizer/__pycache__ 
+src/S_parser/Tokenizer/Data/__pycache__
 src/S_parser/Tree/__pycache__/ 
 src/S_parser/__pycache__
-
+src/S_parser/Errors/__pycache__
