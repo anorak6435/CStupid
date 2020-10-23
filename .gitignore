@@ -2,5 +2,8 @@ src/S_parser/Tokenizer/__pycache__
 src/S_parser/Tokenizer/Data/__pycache__
 src/S_parser/GrammarSyntax/__pycache__
 src/S_parser/GrammarSyntax/Data/__pycache__ 
+src/S_parser/GrammarSemantics/__pycache__
 src/S_parser/__pycache__
 src/S_parser/Errors/__pycache__
+project_documents
+src_bad

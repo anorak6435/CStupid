@@ -1,10 +1,8 @@
 # CStupid
-A language for making visuals on the HTML canvas and python turtle module
+A language for making visuals on the HTML canvas and python (pygame / turtle) module
 
 starting with general features for programming languages
-## features for the grammar
-A. rules
-B. Tag
+
 ## features for the language
 1. comments
 2. variables
@@ -13,15 +11,6 @@ B. Tag
 5. conditions
 6. loops
 7. input
-
-## rules
-Rules are what makes the grammar for the tokenizer.
-Rules will help us define what the language will look like.
-They also show how the parse tree will look like for the function
-they are providing.
-
-## Tag
-Tags are used for the names of the rules in the parser.
 
 ## comments
 // one line comment
