@@ -1,0 +1,20 @@
+// have an overview in this file for how i would like the language to look
+
+start: variable
+
+variable: "var" type name ":=" value ";"
+multiline_comment: "\/\/-->(.|\n)+<--\/\/"
+comment: "\/\/.*"
+whitespace: /\s+/
+
+type: ID
+name: ID
+
+value: ID
+    | INT
+
+ID: /[a-z]+/
+INT: /[0-9]+/
+
+%import common.WS
+%ignore WS

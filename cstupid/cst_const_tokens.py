@@ -1,0 +1,3 @@
+WHITESPACE = 0
+EOF = 1
+COMMENT = 2
