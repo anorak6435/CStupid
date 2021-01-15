@@ -1,16 +1,16 @@
 import re
 
-from cstupid.data_objects.cstrule import Rule
+from cstupid.data_objects.cstrule import TokenRule
 from cstupid.data_objects.csttoken import Token
 
 from typing import Iterator, List, Optional, Tuple
 
 class Lexer:
-    def __init__(self, rules : List[Rule], ignore_rules : List[Rule]) -> None:
+    def __init__(self, rules : List[TokenRule], ignore_rules : List[TokenRule]) -> None:
         self.rules = rules
         self.ignores = ignore_rules
 
-    def match(self, rule : Rule, input_string : str) -> Tuple[Optional[Token], str]:
+    def match(self, rule : TokenRule, input_string : str) -> Tuple[Optional[Token], str]:
         m = re.match(rule.pattern, input_string)
         if isinstance(m, re.Match):
             input_string = input_string[len(m[0]):]
@@ -46,16 +46,16 @@ class Lexer:
 
 class LexerGenerator:
     def __init__(self):
-        self.rules : List[Rule] = []
-        self.ignores : List[Rule] = []
+        self.rules : List[TokenRule] = []
+        self.ignores : List[TokenRule] = []
 
     # add a rule to the lexer generator it should follow
     def add(self, rule_name : str, rule_pattern : str) -> None:
-        self.rules.append(Rule(rule_name, rule_pattern))
+        self.rules.append(TokenRule(rule_name, rule_pattern))
 
     # add a rule to the lexer generator it should ignore
     def ignore(self, rule_name : str, rule_pattern : str) -> None:
-        self.ignores.append(Rule(rule_name, rule_pattern))
+        self.ignores.append(TokenRule(rule_name, rule_pattern))
 
     # build the Lexer from the rules we want_to_use
     def build(self) -> Lexer:

@@ -1,6 +1,7 @@
 import sys
 from cstupid.cstlexer import LexerGenerator
-from cstupid.cstparser import ParserGenerator
+from cstupid.data_objects.cstrule import GrammarNode, Sequence, Optional
+from cstupid.cstparser import Parser
 
 # this is to advanced for now
 # tree = Parser.parse(Lexer.lex("var Int age := 20; var String name := 'Anorak';"))
@@ -14,15 +15,19 @@ lg.add("IDENTIFIER", r"[a-zA-Z_][a-zA-Z0-9_]*")
 
 Lexer = lg.build()
 
-pg = ParserGenerator()
-
-
 stream = Lexer.lex("var Int age := 20;")
 
-print(next(stream))
-print(next(stream))
-print(next(stream))
-print(next(stream))
-print(next(stream))
-print(next(stream))
-print(next(stream))
+
+grammar_tree = [GrammarNode("varKey", "VARKEY")]
+
+parser = Parser(grammar_tree)
+parser.parse(stream)
+
+
+# print(next(stream))
+# print(next(stream))
+# print(next(stream))
+# print(next(stream))
+# print(next(stream))
+# print(next(stream))
+# print(next(stream))
