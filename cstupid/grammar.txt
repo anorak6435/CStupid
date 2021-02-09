@@ -2,7 +2,7 @@
 
 start: variable
 
-variable: "var" type name ":=" value ";"
+variable: "var" name ":" type "=" value ";"
 multiline_comment: "\/\/-->(.|\n)+<--\/\/"
 comment: "\/\/.*"
 whitespace: /\s+/

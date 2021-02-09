@@ -4,6 +4,7 @@ import re
 from typing import List
 from .csttoken import Token
 
+
 class TokenRule:
     def __init__(self, name : str, pattern : str) -> None:
         self.name = name
@@ -28,12 +29,12 @@ class GrammarNode(object):
     def canParse(self, in_tok : Token) -> bool:
         return self.pattern == in_tok.name
     
-    # evaluate the incomming Token
-    def evaluate(self, in_tok : Token) -> 'GrammarNode':
-        if self.canParse(in_tok):
-            return GrammarNode("test", "test")
-        else:
-            raise SyntaxError(f"Parser expected '{self.name}' but not '{in_tok}'")
+    # evaluate the Token
+    # def evaluate(self, in_tok) -> 'GrammarNode':
+    #     if self.canParse(in_tok):
+    #         return GrammarNode("test", "test")
+    #     else:
+    #         raise SyntaxError(f"Parser expected '{self.name}' but not '{in_tok}'")
 
 
 # A sequence of grammar nodes is defined as
@@ -41,36 +42,39 @@ class Sequence(GrammarNode):
     def __init__(self, name : str, nodes : List[GrammarNode]) -> None:
         self.name = name
         self.nodes = nodes
+        # track the index of the current Node in the list
+        self.node_index = 0
+
+    def resetNodeIndex(self) -> None:
+        self.node_index = 0
     
-    def canParse(self, tok_list : List[Token]) -> bool:
-        token_index = 0
-        while token_index < len(self.nodes):
-            if not self.nodes[token_index].canParse(tok_list[token_index]):
-                raise SyntaxError(f"Parser Sequence expected '{self.name}' bvu")
-            token_index += 1
-        # If the code get's to this point the sequence could be parsed
-            
+    # def canParse(self, in_tok : Token) -> bool:
+    #     return_val = self.nodes[self.node_index].canParse(in_tok)
+    #     self.node_index += 1
+    #     if not return_val:
+    #         # reset the node_index if the returnvalue false
+    #         self.resetNodeIndex()
+    #     # when the node_index is equal to the length of te nodes in the rule
+    #     if self.node_index == len(self.nodes):
+    #         pass
+        # token_index = 0
+        # while token_index < len(self.nodes):
+        #     if not self.nodes[token_index].canParse(tok_list[token_index]):
+        #         return False
+        #     token_index += 1
+        # # If the code get's to this point the sequence could be parsed
+        # return True
+
+    # def evaluate(self, tok_list) -> 'Sequence':
+    #     token_index = 0
+    #     while token_index < len(self.nodes):
+    #         if not self.nodes[token_index].canParse([tok_list[token_index]]):
+    #             raise SyntaxError(f"Parser Sequence '{self.name}' expected Node '{self.nodes[token_index]}' bvu")
+    #         token_index += 1
+    #     # If the code get's to this point the sequence could be parsed
+    #     return Sequence("test", [GrammarNode("test", "test")])
+
 
 # Optional grammar nodes are defined as
 class Optional(GrammarNode):
     pass
-
-# A Tag is made for the parser to contain a list of rules
-# class Tag:
-#     def __init__(self, name : str) -> None:
-#         self.name = name
-#         self.pattern : List[Rule]
-
-#     # check if all consecutive rules match the input string
-#     def canParse(self, in_string : str) -> bool:
-#         patternIndex = 0
-#         # track what rules were matched
-#         matched_rules : List[bool] = []
-#         while patternIndex < len(self.pattern):
-#             matched_rules.append(self.pattern[patternIndex].canParse(in_string))
-#             # TODO when a pattern rule matched the in_string has to be updated for the next rule in the list
-#             patternIndex += 1
-#         return all(matched_rules)
-
-#     def __repr__(self) -> str:
-#         return f"(TAG '{self.name}'::'{self.pattern}')"

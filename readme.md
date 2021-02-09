@@ -10,7 +10,8 @@ starting with general features for programming languages
 4. classes
 5. conditions
 6. loops
-7. input
+7. output
+8. input
 
 ## comments
 // one line comment
@@ -20,8 +21,8 @@ all this text will be in here
 <--//
 
 ## variables
-var Int Age := 20;
-var String Name := "Anorak6435";
+var Age : Int = 20;
+var Name : String = "Anorak6435";
 
 ## functions
 // function definition
@@ -35,21 +36,22 @@ getAge();
 ## classes
 class Scalar {
     // create an attribute with it's accessability
-    public Int val;
+    public val : Int;
 
-    //initialize an object of this class
-    public func init (Int: x) : void {
-        this.val := x;
+    //initialize an object of this class (constructor)
+    public func init (x : Int) : void {
+        this.val = x;
     }
 }
 
 class Vector2d {
-    public Int x;
-    public Int y;
+    public x : Int;
+    public y : Int;
     
-    public func init(Int: _x, Int: _y) : void {
-        this.x := _x;
-        this.y := _y;
+    // constructor for 2d vector
+    public func init(_x : Int, _y : Int) : void {
+        this.x = _x;
+        this.y = _y;
     }
 }
 
@@ -74,16 +76,22 @@ times 7 {
     echo("print this 7 times!");
 }
 
-var Int index := 1; //
-var Int people := 10; // the number of people
+var index : Int = 1; //
+var people : Int = 10; // the number of people
 while (index < people) {
     echo("Hello person: %index%");
     index = index + 1;
 }
+
+## output
+echo("hello world!");
+echo("something to print!");
+var name : String = "Anorakfour";
+echo(name);
 
 ## input
 // the input function seems for now that it will be part of an console edition of the
 // language
 // a simple program that askes the user for input their age in this case.
 echo("how old are you?");
-var String age = input();
+var age : String = input();
