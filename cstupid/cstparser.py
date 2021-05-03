@@ -67,7 +67,7 @@ class Parser:
                 if operation.name in (TT_PLUS, TT_PRODUCT, TT_MINUS):
                     operation, _, _ = self.advance()
                     right = self.expect_tok_type(TT_NUMBER, "Expected a Number in the operation at position: index->{}, line->{}, but found {}")
-                    node_value = BinOp(operation, CNumber(var_value.value),CNumber(right.value))
+                    node_value = BinOp(operation.value, CNumber(var_value.value),CNumber(right.value))
                 else:
                     node_value = CNumber(var_value.value)
             elif var_value.name == TT_BOOLEAN:

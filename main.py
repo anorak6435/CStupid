@@ -18,13 +18,19 @@ lg.add(TT_RPAREN, "\)")
 lg.add(TT_SEMICOLON, ";")
 lg.add(TT_COLON, ":")
 lg.add(TT_STRING, "\".+?\"")
+lg.add(TT_COMMENT, r"//[^\n]*")
 lg.add(TT_IDENTIFIER, r"[a-zA-Z_][a-zA-Z0-9_]*")
 
 Lexer = lg.build()
 
+# making some streams for non covering tests
+
 # stream = Lexer.lex("""var name : String = "anorak";
 # var age : Int = 14; """)
-stream = Lexer.lex("""echo("Hello world!"); var greeting : String = "Hello Anorak"; echo(greeting);""")
+# stream = Lexer.lex("""echo("Hello world!"); var greeting : String = "Hello Anorak"; echo(greeting);""")
+stream = Lexer.lex("""var name : String = "anorak";
+//some text explaining in a comment
+echo("printing!");""")
 # semanticly wrong variable declaration
 # stream = Lexer.lex("""var name : Int = "anorak";""") # make sure this line will be caught
 print(stream)

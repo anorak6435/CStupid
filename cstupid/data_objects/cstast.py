@@ -13,7 +13,7 @@ class VarDeclar(Node):
         return f"(VARDECLAR {self.type}:{self.name} := {self.value})"
 
 class BinOp(Node):
-    def __init__(self, operation : Node, left : Node, right : Node):
+    def __init__(self, operation : str, left : Node, right : Node):
         self.op = operation
         self.left = left
         self.right = right

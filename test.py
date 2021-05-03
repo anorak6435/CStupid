@@ -5,6 +5,7 @@ from cstupid.cstparser import Parser
 from cstupid.data_objects.cstrule import TokenRule
 from cstupid.data_objects.cstast import VarDeclar, CString, CNumber, Comment, Node, Output
 from cstupid.cst_const_tokens import *
+from cstupid.statemachine import State
 import unittest
 
 #############
@@ -96,13 +97,13 @@ class TestStoriesWorkingExamples(unittest.TestCase):
         lg.add(TT_VARKEY, "var")
         lg.add(TT_ECHOKEY, "echo")
         lg.add(TT_ASSIGN, "=")
-        lg.add(TT_LPAREN, "\(")
-        lg.add(TT_RPAREN, "\)")
+        lg.add(TT_LPAREN, r"\(")
+        lg.add(TT_RPAREN, r"\)")
         lg.add(TT_SEMICOLON, ";")
         lg.add(TT_COLON, ":")
-        lg.add(TT_PLUS, "\+")
+        lg.add(TT_PLUS, r"\+")
         lg.add(TT_MINUS, "-")
-        lg.add(TT_PRODUCT, "\*")
+        lg.add(TT_PRODUCT, r"\*")
         lg.add(TT_NUMBER, r"\d+")
         lg.add(TT_STRING, "\".+?\"")
         lg.add(TT_COMMENT, r"//[^\n]*")
@@ -177,6 +178,7 @@ class TestStoriesWorkingExamples(unittest.TestCase):
         ast = self.parser.parse(self.lexer.lex(code))
         self.assertEqual(len(ast), 1)
         self.assertIsInstance(ast[0], Output)
+        self.assertIsInstance(ast[0].to_print, CString)
 
     def test_two_string_echo_program(self):
         code = """echo("first string!");
@@ -185,7 +187,19 @@ class TestStoriesWorkingExamples(unittest.TestCase):
         ast = self.parser.parse(self.lexer.lex(code))
         self.assertEqual(len(ast), 2)
         self.assertIsInstance(ast[0], Output)
+        self.assertIsInstance(ast[0].to_print, CString)
         self.assertIsInstance(ast[1], Output)
+        self.assertIsInstance(ast[1].to_print, CString)
+
+class defaultStates(unittest.TestCase):
+    def test_exception_no_onevent_defined(self):
+        class Example(State):
+            def __init__(self):
+                pass
+        
+        with self.assertRaises(Exception):
+            Example().on_event({ "name": "example", "data":"event_data" })
+
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
